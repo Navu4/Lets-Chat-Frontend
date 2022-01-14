@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 import ProtectedRoute from "../src/common/protectedRoute";
+import Layout from "layout/layout";
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   if (process.env.NODE_ENV === "production") {
@@ -16,7 +17,9 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <RecoilRoot>
       <ProtectedRoute router={router}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ProtectedRoute>
     </RecoilRoot>
   );

@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 import ProtectedRoute from "../src/common/protectedRoute";
 import Layout from "layout/layout";
+import Image from "next/image";
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   if (process.env.NODE_ENV === "production") {

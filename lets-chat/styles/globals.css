@@ -9,7 +9,7 @@ body {
   margin: 0;
   position: relative;
   font-family: 'Montserrat' !important;
-  background-color: var(--chakra-colors-brand-600);
+  background-color: var(--chakra-colors-white);
 }
 
 .pressFont {

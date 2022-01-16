@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 import Socket from "atom/socket";
 import User from "atom/user";
@@ -79,7 +80,19 @@ export default function Layout({ children }: any) {
       <Head>
         <title>Let's Chat</title>
       </Head>
-      <chakra.main className="withScroll" display="flex" flexDirection="column">
+      <chakra.main
+        w="100vw"
+        h="100vh"
+        className="withScroll"
+        display="flex"
+        flexDirection="column"
+        bgImg={
+          "https://media.istockphoto.com/vectors/abstract-white-pattern-and-background-poster-with-dynamic-triangle-vector-id1288582739?k=20&m=1288582739&s=612x612&w=0&h=-FxHqbKS3eNIaF0dIGPJAT6Iy2Fw8YKtmH1saj_2upA="
+        }
+        bgPos="center"
+        bgSize={"cover"}
+        bgRepeat="no-repeat"
+      >
         <IncomingCard />
         {children}
       </chakra.main>

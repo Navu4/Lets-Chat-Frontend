@@ -1,4 +1,4 @@
-let config = { server: 'http://localhost:000' }
+let config = { server: 'http://localhost:8000' }
 
 if (process.env.NODE_ENV === 'production') {
   config = {

@@ -8,12 +8,9 @@ const User = atom<UserType | null>({
   default: null,
   effects_UNSTABLE: [persistAtom],
 })
-export const UserToken = atom<{ refreshToken: string; accessToken: string }>({
+export const UserToken = atom<{ token: string; userId: string } | null>({
   key: 'UserToken',
-  default: {
-    accessToken: '',
-    refreshToken: '',
-  },
+  default: null,
   effects_UNSTABLE: [persistAtom],
 })
 

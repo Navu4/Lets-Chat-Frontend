@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-
+import axois from "../services/axiosInstance";
 import Socket from "atom/socket";
-import User from "atom/user";
+import User, { UserToken } from "atom/user";
 import config from "config";
 import { useRouter } from "next/router";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { UserType } from "types/user";
 import { theme } from "../../styles/theme";
 
 import * as io from "socket.io-client";
-import { unprotectedRoutes } from "constants/routerConstants";
 import { chakra, ChakraProvider } from "@chakra-ui/react";
 import Head from "next/head";
 import IncomingCard from "components/videoCall/incomingCard";
 
 export default function Layout({ children }: any) {
   const [user, setUser] = useRecoilState(User);
+  const userToken = useRecoilValue(UserToken);
+
   const [socket, setSocket] = useRecoilState(Socket);
   const router = useRouter();
   const [shouldShow, setShouldShow] = useState(false);
@@ -36,7 +36,7 @@ export default function Layout({ children }: any) {
     if (socket) {
       socket.on("connect", () => {
         setShouldShow(false);
-        socket.emit("join", user?.uuid);
+        socket.emit("join", user?.userId);
       });
       socket.on("disconnect", () => {
         setShouldShow(true);
@@ -52,28 +52,22 @@ export default function Layout({ children }: any) {
 
   useEffect(() => {
     const hasTokens = Boolean(
-      typeof window !== "undefined" && localStorage.getItem("tokens")
+      (typeof window !== "undefined" && localStorage.getItem("tokens")) ||
+        userToken?.token
     );
-    const pathIsProtected = unprotectedRoutes.indexOf(router.pathname) === -1;
 
-    // if (router.pathname === "/signup" && hasTokens) {
-    //   router.replace("/feed");
-    //   return;
-    // }
+    if (
+      (router.pathname === "/signup" || router.pathname === "/login") &&
+      hasTokens
+    ) {
+      router.replace("/");
+      return;
+    }
 
-    // if (!hasTokens) {
-    //   setUser(null);
-    // }
-
-    // if (
-    //   router.pathname !== "/404" &&
-    //   pathIsProtected &&
-    //   user === null &&
-    //   router.pathname !== "/signup"
-    // ) {
-    //   router.replace("/signup");
-    // }
-  }, []);
+    if (!hasTokens) {
+      setUser(null);
+    }
+  }, [userToken]);
 
   return (
     <ChakraProvider theme={theme}>
@@ -86,12 +80,7 @@ export default function Layout({ children }: any) {
         className="withScroll"
         display="flex"
         flexDirection="column"
-        bgImg={
-          "https://media.istockphoto.com/vectors/abstract-white-pattern-and-background-poster-with-dynamic-triangle-vector-id1288582739?k=20&m=1288582739&s=612x612&w=0&h=-FxHqbKS3eNIaF0dIGPJAT6Iy2Fw8YKtmH1saj_2upA="
-        }
-        bgPos="center"
-        bgSize={"cover"}
-        bgRepeat="no-repeat"
+        bgColor={"#D8DBE3"}
       >
         <IncomingCard />
         {children}

@@ -9,9 +9,10 @@ const HomeLayout = ({ children }) => {
         mt={"-25px"}
         h="90vh"
         w="90vw"
-        bgColor={"#12121D"}
+        bgColor={"#F5F7FB"}
         borderRadius="1rem"
         overflow={"hidden"}
+        p="1rem"
       >
         {children}
       </Flex>

@@ -36,20 +36,14 @@ const dummyData: ChatMessageType[] = [
 
 const ChatBox = (props: Props) => {
   const chatMessageRef = useRef<HTMLInputElement>(null);
-  const [chat, setChat] = useState<any>({
-    data: [],
-    pagination: { limit: 0, total: 0, offset: 0 },
-  });
+  const [chat, setChat] = useState<ChatMessageType[]>([]);
   const [offset, setOffset] = useState<number>(0);
 
   const chatMessageLoadMore = () => {};
 
   const clearStateFuc = () => {
     console.log("Clear States");
-    setChat({
-      data: [],
-      pagination: { limit: 0, total: 0, offset: 0 },
-    });
+    setChat([]);
     setOffset(0);
   };
 

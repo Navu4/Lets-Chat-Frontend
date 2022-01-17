@@ -5,32 +5,45 @@ import { RecentUsers } from 'types/chat'
 
 export const CallData = atom<{
   incoming: boolean
-  active: boolean
   from: UserType | null
-  incomingSignal: string
-  myPeerId: string
-  type: 'audio' | 'video'
-  to: RecentUsers | null
-  outgoing: boolean
-  time: MomentInput
-  acceptCall: (() => void) | null
-  callUser: (() => {}) | null
+  active: boolean
 }>({
   key: 'CallData',
   default: {
     incoming: false,
-    active: false,
     from: null,
-    incomingSignal: '',
-    outgoing: false,
-    myPeerId: '',
-    to: null,
-    type: 'video',
-    acceptCall: null,
-    callUser: null,
-    time: 0,
+    active: false,
   },
 })
+
+// export const CallData = atom<{
+//   incoming: boolean
+//   active: boolean
+//   from: UserType | null
+//   incomingSignal: string
+//   myPeerId: string
+//   type: 'audio' | 'video'
+//   to: RecentUsers | null
+//   outgoing: boolean
+//   time: MomentInput
+//   acceptCall: (() => void) | null
+//   callUser: (() => {}) | null
+// }>({
+//   key: 'CallData',
+//   default: {
+//     incoming: false,
+//     active: false,
+//     from: null,
+//     incomingSignal: '',
+//     outgoing: false,
+//     myPeerId: '',
+//     to: null,
+//     type: 'video',
+//     acceptCall: null,
+//     callUser: null,
+//     time: 0,
+//   },
+// })
 
 export const CallSpecs = atom<{
   micOn: boolean

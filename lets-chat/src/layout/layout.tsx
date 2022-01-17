@@ -11,7 +11,7 @@ import { theme } from "../../styles/theme";
 import * as io from "socket.io-client";
 import { chakra, ChakraProvider } from "@chakra-ui/react";
 import Head from "next/head";
-import IncomingCard from "components/videoCall/incomingCard";
+// import IncomingCard from "components/videoCall/VideoCallComponents/incomingCard";
 
 export default function Layout({ children }: any) {
   const [user, setUser] = useRecoilState(User);
@@ -82,7 +82,7 @@ export default function Layout({ children }: any) {
         flexDirection="column"
         bgColor={"#D8DBE3"}
       >
-        <IncomingCard />
+        {/* <IncomingCard /> */}
         {children}
       </chakra.main>
     </ChakraProvider>

@@ -1,9 +1,23 @@
-import { Avatar, Flex, Text } from "@chakra-ui/react";
+import { Avatar, Flex, HStack, Icon, Text } from "@chakra-ui/react";
+import { CallData } from "atom/videoCall";
 import React from "react";
+import { FiMoreVertical, FiPhone } from "react-icons/fi";
+import { useSetRecoilState } from "recoil";
 
 interface Props {}
 
 const ChatBoxHeader = (props: Props) => {
+  const setCallData = useSetRecoilState(CallData);
+
+  const handleCallClick = () => {
+    setCallData((prev) => {
+      return {
+        ...prev,
+        active: true,
+      };
+    });
+  };
+
   return (
     <Flex
       w="full"
@@ -35,6 +49,26 @@ const ChatBoxHeader = (props: Props) => {
           {"Navjot Singh"}
         </Text>
       </Flex>
+      <HStack spacing={6} h="full" align={"center"}>
+        <Icon
+          onClick={() => {
+            console.log("Click kra");
+            handleCallClick();
+          }}
+          cursor={"pointer"}
+          as={FiPhone}
+          fontSize="1.5rem"
+          color="black"
+          fill={"black"}
+        ></Icon>
+        <Icon
+          cursor={"pointer"}
+          as={FiMoreVertical}
+          fontSize="1.5rem"
+          color="black"
+          fill={"black"}
+        ></Icon>
+      </HStack>
     </Flex>
   );
 };

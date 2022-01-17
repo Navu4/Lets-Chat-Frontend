@@ -19,6 +19,7 @@ import { LoginMutation } from "services/auth";
 import { useRouter } from "next/router";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import User, { UserToken } from "atom/user";
+import axois from "../../services/axiosInstance";
 
 interface Props {}
 
@@ -53,10 +54,13 @@ const LoginPage = (props: Props) => {
     try {
       const data: { token: string; userId: string; name: string } =
         await LoginMutation(signUpData);
-      setUser({
-        email: signUpData.email,
-        userId: data.userId,
-        name: data.name,
+      setUser((prev): any => {
+        return {
+          ...prev,
+          email: signUpData.email,
+          userId: data.userId,
+          name: data.name,
+        };
       });
 
       setUserToken(data);

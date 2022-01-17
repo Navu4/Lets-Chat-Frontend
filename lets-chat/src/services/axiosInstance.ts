@@ -9,7 +9,8 @@ axios.interceptors.request.use(
       let tokens
       if (typeof window !== 'undefined')
         tokens = JSON.parse(localStorage.getItem('tokens') || '')
-      conf.headers!['Authorization'] = 'Bearer ' + tokens.token
+      conf.headers!['AUTH_TOKEN'] = tokens
+      console.log({ token: tokens })
       return conf
     } catch (errr) {
       console.error(errr)

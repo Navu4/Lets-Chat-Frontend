@@ -1,12 +1,14 @@
 import { Avatar, Flex, HStack, Icon, Text } from "@chakra-ui/react";
+import { ActiveUser } from "atom/chat";
 import { CallData } from "atom/videoCall";
 import React from "react";
 import { FiMoreVertical, FiPhone } from "react-icons/fi";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 interface Props {}
 
 const ChatBoxHeader = (props: Props) => {
+  const activeUser = useRecoilValue(ActiveUser);
   const setCallData = useSetRecoilState(CallData);
 
   const handleCallClick = () => {
@@ -31,7 +33,7 @@ const ChatBoxHeader = (props: Props) => {
         height={"42px"}
         width={"42px"}
         mr={"10px"}
-        src={`https://avatars.dicebear.com/api/pixel-art/${"dxbasjdb"}.svg`}
+        src={`https://avatars.dicebear.com/api/pixel-art/${activeUser?.userId}.svg`}
         borderWidth={"2px"}
         borderColor={"white"}
         borderStyle="solid"
@@ -46,7 +48,7 @@ const ChatBoxHeader = (props: Props) => {
           isTruncated
           width={"full"}
         >
-          {"Navjot Singh"}
+          {activeUser?.name}
         </Text>
       </Flex>
       <HStack spacing={6} h="full" align={"center"}>

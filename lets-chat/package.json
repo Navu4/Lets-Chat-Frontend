@@ -21,6 +21,7 @@
     "@types/recoil": "^0.0.9",
     "@types/simple-peer": "^9.11.4",
     "@types/socket.io-client": "^3.0.0",
+    "@types/uuid": "^8.3.4",
     "axios": "^0.24.0",
     "emoji-mart": "^3.0.1",
     "framer-motion": "5",
@@ -35,7 +36,8 @@
     "recoil": "^0.5.2",
     "recoil-persist": "^4.0.0",
     "simple-peer": "^9.11.0",
-    "socket.io-client": "^4.4.1"
+    "socket.io-client": "^4.4.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/node": "17.0.8",

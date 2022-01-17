@@ -6,11 +6,10 @@ export type RecentUsers = {
 }
 
 export interface ChatMessageType {
-  from: {
-    userId: string
-    name: string
-  }
-  text: string
+  id: string
+  roomId: string
+  from: string
+  msg: string
   createdAt: string
-  isSent: boolean
+  isSent?: boolean
 }

@@ -4,11 +4,11 @@ import React, { KeyboardEvent, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea/lib";
 import { FiSend, FiSmile } from "react-icons/fi";
 
-import SimpleBar from "simplebar-react";
+interface Props {
+  sendMessage: (msg: string) => void;
+}
 
-interface Props {}
-
-const ChatBoxFooter = (props: Props) => {
+const ChatBoxFooter = ({ sendMessage }: Props) => {
   const [msgInput, setMsgInput] = useState("");
   const [media, setMedia] = useState([]);
   const emojiClickAway = useRef<HTMLDivElement>(null);
@@ -33,12 +33,18 @@ const ChatBoxFooter = (props: Props) => {
       if (msgInput.trim().length == 0 && media && media.length == 0) {
         return;
       }
-
+      sendMessage(msgInput);
       setMsgInput("");
     }
   };
 
-  const handleSendClick = () => {};
+  const handleSendClick = () => {
+    if (msgInput.trim().length == 0 && media && media.length == 0) {
+      return;
+    }
+    sendMessage(msgInput);
+    setMsgInput("");
+  };
 
   return (
     <Flex w={"full"} py={"0.5rem"}>

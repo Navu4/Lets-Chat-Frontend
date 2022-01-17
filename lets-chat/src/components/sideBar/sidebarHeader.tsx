@@ -9,11 +9,12 @@ import {
   MenuItem,
   Icon,
 } from "@chakra-ui/react";
-import User from "atom/user";
+import User, { UserToken } from "atom/user";
 import React, { useRef } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { FiMoreVertical } from "react-icons/fi";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface Props {}
 
@@ -42,12 +43,12 @@ const SidebarHeader = (props: Props) => {
           width={"42px"}
           mr={"10px"}
           src={`https://avatars.dicebear.com/api/pixel-art/${
-            user?.uuid || "dxbasjdb"
+            user?.userId || "dxbasjdb"
           }.svg`}
           borderWidth={"2px"}
           borderColor={"white"}
           borderStyle="solid"
-          name={user?.fullName || "A"}
+          name={user?.name || "A"}
         />
 
         <Flex h="full" flex={1} flexDir="column" justify={"center"}>
@@ -58,7 +59,7 @@ const SidebarHeader = (props: Props) => {
             isTruncated
             width={"full"}
           >
-            {user?.fullName || "Navjot Singh"}
+            {user?.name || "Navjot Singh"}
           </Text>
           <Text as="p" fontSize={"0.8rem"} color={"black"}>
             My Account
@@ -76,14 +77,24 @@ const SidebarHeader = (props: Props) => {
 export default SidebarHeader;
 
 export const MorePoper = () => {
+  const setUser = useSetRecoilState(User);
+  const setUserToken = useSetRecoilState(UserToken);
+  const router = useRouter();
+  const handleLogoutClick = () => {
+    setUser(null);
+    setUserToken(null);
+    router.push("/login");
+  };
   return (
     <Menu>
       <MenuButton isLazy>
         <Icon as={FiMoreVertical} color="black" fontSize={"1.5rem"}></Icon>
       </MenuButton>
       <MenuList p={0}>
-        <MenuItem p={"0.8rem"}>Logout</MenuItem>
-        <MenuItem p={"0.8rem"}>Logout</MenuItem>
+        <MenuItem p={"0.8rem"}>Create Room</MenuItem>
+        <MenuItem p={"0.8rem"} onClick={handleLogoutClick}>
+          Logout
+        </MenuItem>
       </MenuList>
     </Menu>
   );

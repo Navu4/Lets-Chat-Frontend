@@ -1,22 +1,23 @@
 import { Avatar, Flex, Text } from "@chakra-ui/react";
-import React, { FC } from "react";
+import { ActiveUser } from "atom/chat";
+import User from "atom/user";
+import React, { FC, useEffect } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 interface Props {}
 
-const dummyData = [
-  {
-    name: "Navjot Singh",
-    id: "dasldmaslmd",
-    lastMessage: "How are you ?",
-  },
-  {
-    name: "Navjot Singh",
-    id: "dasldmaslmd",
-    lastMessage: "How are you ?",
-  },
-];
-
 const RecentUser = (props: Props) => {
+  const user = useRecoilValue(User);
+
+  const setActiveUser = useSetRecoilState(ActiveUser);
+  useEffect(() => {
+    if (user && user.roomIds.length > 0) {
+      setActiveUser({
+        name: user.roomIds[0].name,
+        userId: user.roomIds[0]._id,
+      });
+    }
+  }, [user]);
   return (
     <Flex
       overflowY={"auto"}
@@ -29,14 +30,16 @@ const RecentUser = (props: Props) => {
         className="custom_scrollBar"
         w="full"
         h={"fit-content"}
-        maxH={"calc(100% - 140px)"}
+        maxH={"100%"}
         flexDir={"column"}
         bgColor="white"
         borderRadius={"0.8rem"}
       >
-        {dummyData.map((data, index) => {
-          return <UserCard key={data.id + index} data={data} />;
-        })}
+        {user &&
+          user.roomIds &&
+          user.roomIds.map((data, index) => {
+            return <UserCard key={data._id + index} data={data} />;
+          })}
       </Flex>
     </Flex>
   );
@@ -45,22 +48,36 @@ const RecentUser = (props: Props) => {
 export default RecentUser;
 
 export const UserCard: FC<{
-  data: { name: string; id: string; lastMessage: string };
+  data: { name: string; _id: string; lastMessage?: string };
 }> = ({ data }) => {
+  const setActiveUser = useSetRecoilState(ActiveUser);
+
+  const handleOnClick = () => {
+    setActiveUser({
+      name: data.name,
+      userId: data._id,
+    });
+  };
+
   return (
     <Flex
       w="full"
       h={"5rem"}
       p={"1rem"}
+      cursor="pointer"
+      _hover={{
+        bgColor: "#F5F7FB",
+        opacity: 7,
+      }}
       alignItems={"center"}
-      onClick={() => {}}
+      onClick={handleOnClick}
     >
       <Avatar
         cursor={"pointer"}
         height={"42px"}
         width={"42px"}
         mr={"10px"}
-        src={`https://avatars.dicebear.com/api/pixel-art/${"dxbasjdb"}.svg`}
+        src={`https://avatars.dicebear.com/api/pixel-art/${data._id}.svg`}
         borderWidth={"2px"}
         borderColor={"white"}
         borderStyle="solid"
@@ -74,11 +91,15 @@ export const UserCard: FC<{
           isTruncated
           width={"full"}
         >
-          Navjot Singh
+          {data.name}
         </Text>
-        <Text as="p" fontSize={"0.8rem"} color={"lightblue"}>
-          How are you?
-        </Text>
+        {data.lastMessage ? (
+          <Text as="p" fontSize={"0.8rem"} color={"lightblue"}>
+            {data.lastMessage}
+          </Text>
+        ) : (
+          <></>
+        )}
       </Flex>
     </Flex>
   );

@@ -11,7 +11,7 @@ import { ChatMessageType } from "types/chat";
 const Message: FC<{ Message: ChatMessageType }> = ({ Message }) => {
   const user = useRecoilValue(User);
   const activeUser = useRecoilValue(ActiveUser);
-  const isUserSender = Message.from.userId === "z";
+  const isUserSender = Message.from !== user?.userId;
   return (
     <Flex
       width={"full"}
@@ -23,8 +23,8 @@ const Message: FC<{ Message: ChatMessageType }> = ({ Message }) => {
         <Avatar
           bgColor={"#4E426D"}
           height={"2.5rem"}
-          src={`https://avatars.dicebear.com/api/pixel-art/${Message.from.userId}.svg`}
-          name={Message.from.name}
+          src={`https://avatars.dicebear.com/api/pixel-art/${Message.from}.svg`}
+          name={Message.from}
           width={"2.5rem"}
           cursor={"pointer"}
         />
@@ -56,7 +56,7 @@ const Message: FC<{ Message: ChatMessageType }> = ({ Message }) => {
           color={isUserSender ? "white" : "black"}
           fontSize={"1rem"}
         >
-          {Message?.text}
+          {Message?.msg}
         </Text>
 
         {isUserSender ? (

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axois from "../services/axiosInstance";
 import Socket from "atom/socket";
 import User, { UserToken } from "atom/user";
 import config from "config";
@@ -7,10 +6,12 @@ import { useRouter } from "next/router";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { UserType } from "types/user";
 import { theme } from "../../styles/theme";
+import axios from "../services/axiosInstance";
 
 import * as io from "socket.io-client";
 import { chakra, ChakraProvider } from "@chakra-ui/react";
 import Head from "next/head";
+import { GetUser } from "services/user";
 // import IncomingCard from "components/videoCall/VideoCallComponents/incomingCard";
 
 export default function Layout({ children }: any) {
@@ -36,7 +37,7 @@ export default function Layout({ children }: any) {
     if (socket) {
       socket.on("connect", () => {
         setShouldShow(false);
-        socket.emit("join", user?.userId);
+        socket.emit("join", userToken?.userId);
       });
       socket.on("disconnect", () => {
         setShouldShow(true);
@@ -44,11 +45,24 @@ export default function Layout({ children }: any) {
     }
   }, [socket]);
 
-  const UserQuery = () => {}; // Axios Call for User
+  const UserQuery = async () => {
+    try {
+      const data = await GetUser({
+        userId: userToken?.userId || "",
+        token: userToken?.token || "",
+      });
+
+      if (data) {
+        OnUserData(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }; // Axios Call for User
 
   useEffect(() => {
-    if (localStorage.getItem("tokens")) UserQuery();
-  }, []);
+    UserQuery();
+  }, [userToken]);
 
   useEffect(() => {
     const hasTokens = Boolean(

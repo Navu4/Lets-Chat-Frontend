@@ -17,7 +17,7 @@ import AddRoomModal from "components/modals/addRoomModal";
 interface Props {}
 
 const SideBar = (props: Props) => {
-  const user = useRecoilValue(User);
+  const [user, setUser] = useRecoilState(User);
   const userToken = useRecoilValue(UserToken);
   const toast = useToast();
   const [searchInput, setSearchInput] = useState<string>("");
@@ -40,6 +40,12 @@ const SideBar = (props: Props) => {
         token: userToken?.token || "",
       });
       console.log(data);
+      setUser((prev) => {
+        return {
+          ...prev,
+          roomIds: [{ _id: data._id, name, users: [] }, ...prev.roomIds],
+        };
+      });
       toast({
         title: "Room Created Succussfully",
         status: "success",
@@ -72,6 +78,12 @@ const SideBar = (props: Props) => {
         status: "success",
         variant: "left-accent",
         isClosable: true,
+      });
+      setUser((prev) => {
+        return {
+          ...prev,
+          roomIds: [{ _id: data._id, name, users: [] }, ...prev.roomIds],
+        };
       });
     } catch (err: any) {
       console.log(err);

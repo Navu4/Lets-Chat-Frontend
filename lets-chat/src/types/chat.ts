@@ -12,4 +12,5 @@ export interface ChatMessageType {
   msg: string
   createdAt: string
   isSent?: boolean
+  name: string
 }

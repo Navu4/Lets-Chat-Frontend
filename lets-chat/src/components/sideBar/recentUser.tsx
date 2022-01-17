@@ -2,6 +2,7 @@ import { Avatar, Flex, Text } from "@chakra-ui/react";
 import { ActiveUser } from "atom/chat";
 import User from "atom/user";
 import React, { FC, useEffect } from "react";
+import { FiDroplet } from "react-icons/fi";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 interface Props {}
@@ -17,7 +18,7 @@ const RecentUser = (props: Props) => {
         userId: user.roomIds[0]._id,
       });
     }
-  }, [user]);
+  }, []);
   return (
     <Flex
       overflowY={"auto"}
@@ -38,7 +39,7 @@ const RecentUser = (props: Props) => {
         {user &&
           user.roomIds &&
           user.roomIds.map((data, index) => {
-            return <UserCard key={data._id + index} data={data} />;
+            return <UserCard key={data._id} data={data} />;
           })}
       </Flex>
     </Flex>
@@ -48,11 +49,29 @@ const RecentUser = (props: Props) => {
 export default RecentUser;
 
 export const UserCard: FC<{
-  data: { name: string; _id: string; lastMessage?: string };
+  data: {
+    name: string;
+    _id: string;
+    lastMessage?: string;
+    isNotification?: boolean;
+  };
 }> = ({ data }) => {
   const setActiveUser = useSetRecoilState(ActiveUser);
+  const setUser = useSetRecoilState(User);
 
   const handleOnClick = () => {
+    if (data.isNotification)
+      setUser((prev) => {
+        return {
+          ...prev,
+          roomIds: prev.roomIds.map((dat) => {
+            return {
+              ...dat,
+              isNotification: false,
+            };
+          }),
+        };
+      });
     setActiveUser({
       name: data.name,
       userId: data._id,
@@ -83,7 +102,7 @@ export const UserCard: FC<{
         borderStyle="solid"
         name={"N"}
       />
-      <Flex flexDir={"column"}>
+      <Flex flexDir={"column"} flex="1">
         <Text
           as="h3"
           color={"black"}
@@ -101,6 +120,11 @@ export const UserCard: FC<{
           <></>
         )}
       </Flex>
+      {data?.isNotification && (
+        <Flex h="full" align={"center"}>
+          <Flex borderRadius={"50%"} bgColor={"pink"} h="1.5" w="1.5"></Flex>
+        </Flex>
+      )}
     </Flex>
   );
 };

@@ -87,7 +87,6 @@ const ChatBoxFooter = ({ sendMessage }: Props) => {
           <TextareaAutosize
             className="custom_scrollBar"
             onChange={(e) => {
-              console.log(e.target);
               handleChange(e.target.value);
             }}
             type="*"

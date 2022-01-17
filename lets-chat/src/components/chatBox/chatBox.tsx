@@ -38,19 +38,20 @@ const ChatBox = (props: Props) => {
         token: userToken?.token || "",
       });
       console.log(data);
+      setChat(data);
     } catch (err) {
       console.log(err);
     }
   };
 
   const sendMessage = (msg: string) => {
-    console.log(msg);
     if (msg.trim().length > 0) {
       const payload = {
         id: uuidv4() as string,
         roomId: activeUser?.userId,
         msg,
         from: userToken?.userId,
+        name: user.name,
         createdAt: moment().toString(),
       };
       socket && socket.emit("send-message", payload);
@@ -58,6 +59,7 @@ const ChatBox = (props: Props) => {
       setChat((prev): any => {
         return [...prev, { ...payload, isSent: false }];
       });
+      chatMessageRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -84,6 +86,22 @@ const ChatBox = (props: Props) => {
                 };
               });
             } else return [...prev, payload];
+          });
+        } else {
+          setUser((prev) => {
+            return {
+              ...prev,
+              roomIds: prev.roomIds.map((dat) => {
+                if (dat._id === payload.roomId)
+                  return {
+                    ...dat,
+                    isNotification: true,
+                  };
+                else {
+                  return dat;
+                }
+              }),
+            };
           });
         }
       });

@@ -29,3 +29,23 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+.custom_scrollBar {
+  overflow-y: auto;
+}
+.custom_scrollBar::-webkit-scrollbar {
+  width: 0.4em;
+  height: 0.4em;
+}
+.custom_scrollBar::-webkit-scrollbar,
+.custom_scrollBar::-webkit-scrollbar-thumb {
+  overflow: visible;
+  border-radius: 4px;
+}
+.custom_scrollBar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+.custom_scrollBar:hover::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+}

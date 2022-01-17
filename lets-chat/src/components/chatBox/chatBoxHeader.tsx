@@ -17,7 +17,7 @@ const ChatBoxHeader = (props: Props) => {
         height={"42px"}
         width={"42px"}
         mr={"10px"}
-        src={`https://avatars.dicebear.com/api/jdenticon/${"dxbasjdb"}.svg`}
+        src={`https://avatars.dicebear.com/api/pixel-art/${"dxbasjdb"}.svg`}
         borderWidth={"2px"}
         borderColor={"white"}
         borderStyle="solid"

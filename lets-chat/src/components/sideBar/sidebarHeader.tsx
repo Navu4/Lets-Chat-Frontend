@@ -41,7 +41,7 @@ const SidebarHeader = (props: Props) => {
           height={"42px"}
           width={"42px"}
           mr={"10px"}
-          src={`https://avatars.dicebear.com/api/jdenticon/${
+          src={`https://avatars.dicebear.com/api/pixel-art/${
             user?.uuid || "dxbasjdb"
           }.svg`}
           borderWidth={"2px"}

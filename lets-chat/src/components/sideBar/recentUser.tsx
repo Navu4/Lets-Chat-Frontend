@@ -26,6 +26,7 @@ const RecentUser = (props: Props) => {
       py={"0.1rem"}
     >
       <Flex
+        className="custom_scrollBar"
         w="full"
         h={"fit-content"}
         maxH={"calc(100% - 140px)"}
@@ -59,7 +60,7 @@ export const UserCard: FC<{
         height={"42px"}
         width={"42px"}
         mr={"10px"}
-        src={`https://avatars.dicebear.com/api/jdenticon/${"dxbasjdb"}.svg`}
+        src={`https://avatars.dicebear.com/api/pixel-art/${"dxbasjdb"}.svg`}
         borderWidth={"2px"}
         borderColor={"white"}
         borderStyle="solid"

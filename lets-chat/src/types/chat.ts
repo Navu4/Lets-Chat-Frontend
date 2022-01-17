@@ -4,3 +4,13 @@ export type RecentUsers = {
   emailId: string
   profileUrl: string
 }
+
+export interface ChatMessageType {
+  from: {
+    userId: string
+    name: string
+  }
+  text: string
+  createdAt: string
+  isSent: boolean
+}
